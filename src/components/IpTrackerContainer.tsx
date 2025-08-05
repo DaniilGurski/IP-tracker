@@ -1,20 +1,18 @@
 import IpSearchBar from "@components/IpSearchBar";
 import IpInfoContainer from "@components/IpInfoContainer";
 import { useQuery } from "@tanstack/react-query";
-import { getCountryGeoInformation } from "@/services/geoApi";
 import { useAtomValue, useSetAtom } from "jotai";
 import { ipAddressCoordsAtom, ipAddressValueAtom } from "@/atoms";
 import { useEffect, useState } from "react";
+import { getCountryGeoInformationQueryOptions } from "@/services/geoApi/queryOptions";
 
-// 192.212.174.101
 export default function IpTrackerContainer() {
   const ipAddressValue = useAtomValue(ipAddressValueAtom);
   const setIpAddressCoords = useSetAtom(ipAddressCoordsAtom);
-  const [enabled, setEnabled] = useState(true);
+  const [enabled, setEnabled] = useState(false);
 
-  const { data, error, isFetching, refetch } = useQuery({
-    queryKey: ["country", ipAddressValue],
-    queryFn: () => getCountryGeoInformation(ipAddressValue),
+  const { data, isFetching, refetch } = useQuery({
+    ...getCountryGeoInformationQueryOptions(ipAddressValue),
     enabled,
   });
 

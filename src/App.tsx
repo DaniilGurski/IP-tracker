@@ -1,5 +1,5 @@
 import { useAtomValue } from "jotai";
-import { ipAddressCoordsAtom } from "./atoms";
+import { ipAddressCoordsAtom } from "@/atoms";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import SetViewOnSubmit from "@components/SetViewOnSubmit";
 import IpTrackerContainer from "@components/IpTrackerContainer";
