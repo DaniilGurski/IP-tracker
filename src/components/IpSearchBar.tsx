@@ -1,16 +1,14 @@
 import { ipAddressValueAtom } from "@/atoms";
-import iconArrow from "@assets/icon-arrow.svg";
-import type { RefetchOptions } from "@tanstack/react-query";
 import { useSetAtom } from "jotai";
 import { useRef, type FormEvent } from "react";
-import { type QueryObserverResult } from "@tanstack/react-query";
-import { type GeoApiResponse } from "@/services/geoApi/types";
+import iconArrow from "@assets/icon-arrow.svg";
 
 type IpSearchBarProps = {
   refetch: () => void;
+  setEnabled: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function IpSearchBar({ refetch }: IpSearchBarProps) {
+export default function IpSearchBar({ refetch, setEnabled }: IpSearchBarProps) {
   const setIpAddressValue = useSetAtom(ipAddressValueAtom);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -19,9 +17,10 @@ export default function IpSearchBar({ refetch }: IpSearchBarProps) {
 
     if (inputRef.current) {
       setIpAddressValue(inputRef.current.value);
-    }
 
-    refetch();
+      setEnabled(true);
+      refetch();
+    }
   };
 
   return (

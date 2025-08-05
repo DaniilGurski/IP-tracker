@@ -2,18 +2,26 @@ import IpSearchBar from "@components/IpSearchBar";
 import IpInfoContainer from "@components/IpInfoContainer";
 import { useQuery } from "@tanstack/react-query";
 import { getCountryGeoInformation } from "@/services/geoApi";
-import { useAtomValue } from "jotai";
-import { ipAddressValueAtom } from "@/atoms";
+import { useAtomValue, useSetAtom } from "jotai";
+import { ipAddressCoordsAtom, ipAddressValueAtom } from "@/atoms";
+import { useEffect, useState } from "react";
 
 // 192.212.174.101
 export default function IpTrackerContainer() {
   const ipAddressValue = useAtomValue(ipAddressValueAtom);
+  const setIpAddressCoords = useSetAtom(ipAddressCoordsAtom);
+  const [enabled, setEnabled] = useState(true);
 
   const { data, error, isFetching, refetch } = useQuery({
     queryKey: ["country", ipAddressValue],
     queryFn: () => getCountryGeoInformation(ipAddressValue),
-    enabled: false,
+    enabled,
   });
+
+  useEffect(() => {
+    if (!data) return;
+    setIpAddressCoords([data.location.lat, data.location.lng]);
+  }, [data]);
 
   return (
     <div className="bg-[image:url(./assets/pattern-bg-mobile.png)] bg-cover bg-no-repeat pt-4 sm:bg-[image:url(./assets/pattern-bg-desktop.png)] md:pt-6">
@@ -22,7 +30,7 @@ export default function IpTrackerContainer() {
           IP Address Tracker
         </h1>
 
-        <IpSearchBar refetch={refetch} />
+        <IpSearchBar refetch={refetch} setEnabled={setEnabled} />
 
         <IpInfoContainer info={data} isFetching={isFetching} />
       </div>

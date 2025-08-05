@@ -1,5 +1,5 @@
 import type { GeoApiResponse } from "@/services/geoApi/types";
-import Loader from "./Loader";
+import Loader from "@components/Loader";
 
 type IpInfoContainerProps = {
   info: GeoApiResponse | undefined;

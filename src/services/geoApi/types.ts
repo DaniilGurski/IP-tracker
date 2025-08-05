@@ -1,18 +1,27 @@
+type GeoLocation = {
+  country: string;
+  region: string;
+  city: string;
+  lat: number;
+  lng: number;
+  postalCode: string;
+  timezone: string;
+  geonameId: number;
+};
+
+type AsInfo = {
+  asn: number;
+  name: string;
+  route: string;
+  domain: string;
+  type: string;
+};
+
 export type GeoApiResponse = {
   ip: string;
-  location: {
-    country: string;
-    region: string;
-    timezone: string;
-  };
+  location: GeoLocation;
   domains: string[];
-  as: {
-    asn: number;
-    name: string;
-    route: string;
-    domain: string;
-    type: string;
-  };
+  as: AsInfo;
   isp: string;
 };
 
