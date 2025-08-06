@@ -6,6 +6,7 @@ export default function SetViewOnSubmit() {
   const ipAddressCoords = useAtomValue(ipAddressCoordsAtom);
   const map = useMap();
   map.setView(ipAddressCoords, map.getZoom());
+  // map.flyTo(ipAddressCoords, map.getZoom());
 
   return null;
 }
