@@ -1,69 +1,35 @@
-# React + TypeScript + Vite
+# IP tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project hightlights
 
-Currently, two official plugins are available:
+- Leaflet map
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Leaflet map
 
-## Expanding the ESLint configuration
+To make working with **LeafletJS** easier, I used **React Leaflet**. The leaflet map component consists of four layers: **MapContainer**, **TileLayer**, **Marker**, and **Popup** (not used in this project). Tilelayer is the map tiles themselves, and **OpenStreetMap** is used for them. This is a free resource, but make sure to comply with the **Tile Usage Policy**. React Leaflet helps with this through properties such as **attribution**.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- [Tile Usage Policy](https://operations.osmfoundation.org/policies/tiles/)
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Dynamic change of the map center
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+In the MapContainer component, the center property is **immutable**. The only way to change it is to use the useMap hook, but that is only available to components inside MapContainer. In my case, I needed to change the map view separately from the MapContainer. I found an interesting solution to this problem demonstrated in one CodeSandbox project. The trick is to create a special component (**SetViewOnSubmit.tsx**) that accepts state (or simply reads the value of jotai atom), and pass it to the setView method. This way, I was able to change the state independently of MapContainer and dynamically change the map view.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+**SetViewOnSubmit.tsx**:
 
 ```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+import { ipAddressCoordsAtom } from "@/atoms";
+import { useAtomValue } from "jotai";
+import { useMap } from "react-leaflet";
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+export default function SetViewOnSubmit() {
+  const ipAddressCoords = useAtomValue(ipAddressCoordsAtom);
+  const map = useMap();
+  map.setView(ipAddressCoords, map.getZoom());
+
+  return null;
+}
 ```
+
+**Note:** I think that in this project, I didn't even need to create a state, but simply read the location coordinates from the data obtained from useQuery(), as I did with the error object (as in the IpInfoContainerPlaceholder component).
+
+- [How to change center dynamically in React-Leaflet v.3.x](https://codesandbox.io/p/sandbox/how-to-change-center-dynamically-in-react-leaflet-v3x-d8rn7?file=%2Fsrc%2FMapComp.jsx)
