@@ -9,7 +9,7 @@ import { getCountryGeoInformationQueryOptions } from "@/services/geoApi/queryOpt
 export default function IpTrackerContainer() {
   const ipAddressValue = useAtomValue(ipAddressValueAtom);
   const setIpAddressCoords = useSetAtom(ipAddressCoordsAtom);
-  const [enabled, setEnabled] = useState(false);
+  const [enabled, setEnabled] = useState(true);
 
   const { data, isFetching, refetch } = useQuery({
     ...getCountryGeoInformationQueryOptions(ipAddressValue),
