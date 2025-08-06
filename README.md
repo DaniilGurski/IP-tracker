@@ -10,6 +10,8 @@ The IP Tracker app using the IP geolocation API and LeafletJS.
 
 To make working with **LeafletJS** easier, I used **React Leaflet**. The leaflet map component consists of four layers: **MapContainer**, **TileLayer**, **Marker**, and **Popup** (not used in this project). Tilelayer is the map tiles themselves, and **OpenStreetMap** is used for them. This is a free resource, but make sure to comply with the **Tile Usage Policy**. React Leaflet helps with this through properties such as **attribution**.
 
+- [LeafletJS Docs](https://leafletjs.com/reference.html)
+- [React Leaflet Docs](https://react-leaflet.js.org/)
 - [Tile Usage Policy](https://operations.osmfoundation.org/policies/tiles/)
 
 ### Dynamic change of the map center
