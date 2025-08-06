@@ -1,5 +1,7 @@
 # IP tracker
 
+The IP Tracker app using the IP geolocation API and LeafletJS.
+
 ## Project hightlights
 
 - Leaflet map
