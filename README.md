@@ -10,7 +10,7 @@ The IP Tracker app using the IP geolocation API and LeafletJS.
 
 To make working with **LeafletJS** easier, I used **React Leaflet**. The leaflet map component consists of four layers: **MapContainer**, **TileLayer**, **Marker**, and **Popup** (not used in this project). Tilelayer is the map tiles themselves, and **OpenStreetMap** is used for them. This is a free resource, but make sure to comply with the **Tile Usage Policy**. React Leaflet helps with this through properties such as **attribution**.
 
-**Useful resources:**:
+**Useful resources:**
 
 - [LeafletJS Docs](https://leafletjs.com/reference.html)
 - [React Leaflet Docs](https://react-leaflet.js.org/)
@@ -39,6 +39,6 @@ export default function SetViewOnSubmit() {
 
 **Note:** I think that in this project, I didn't even need to create a state, but simply read the location coordinates from the data obtained from useQuery(), as I did with the error object (as in the IpInfoContainerPlaceholder component).
 
-**Useful resources:**:
+**Useful resources:**
 
 - [How to change center dynamically in React-Leaflet v.3.x](https://codesandbox.io/p/sandbox/how-to-change-center-dynamically-in-react-leaflet-v3x-d8rn7?file=%2Fsrc%2FMapComp.jsx)
